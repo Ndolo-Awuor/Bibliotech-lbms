@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# Environment variables (keep secrets out of Git; .env.example is still committed)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# OS / editor junk
+__MACOSX/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

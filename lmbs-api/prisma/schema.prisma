@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Book {
+  id              String   @id @default(uuid())
+  title           String
+  author          String
+  genre           String   @default("General")
+  totalCopies     Int      @default(1)
+  availableCopies Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  pages           Int?
+  publishedYear   Int?
+  isbn            String?  @unique
+  shelfLocation   String?
+  description     String?
+  coverGradient   String?
+  loans           Loan[]
+}
+
+model Member {
+  id               String   @id @default(uuid())
+  name             String
+  email            String   @unique
+  phone            String   @default("")
+  membershipNumber String   @unique
+  status           String   @default("active")
+  joinedDate       DateTime @default(now()) @db.Date
+  bio              String?
+  hobbies          String?
+  updatedAt        DateTime @updatedAt
+  loans            Loan[]
+}
+
+model Loan {
+  id         String    @id @default(uuid())
+  bookId     String
+  memberId   String
+  borrowDate DateTime  @default(now()) @db.Date
+  dueDate    DateTime  @db.Date
+  returnDate DateTime? @db.Date
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Restrict)
+  member Member @relation(fields: [memberId], references: [id], onDelete: Restrict)
+
+  @@index([bookId, returnDate])
+  @@index([memberId, returnDate])
+}
+
+model Activity {
+  id          String   @id @default(uuid())
+  type        String
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+}
