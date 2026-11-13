@@ -21,3 +21,9 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Prisma-generated editor and agent helper files
+lmbs-api/.agents/
+lmbs-api/.claude/
+lmbs-api/.windsurf/
+lmbs-api/skills-lock.json
