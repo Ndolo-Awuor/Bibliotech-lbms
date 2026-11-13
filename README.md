@@ -54,6 +54,16 @@ These steps use Node.js 24 and PostgreSQL 17, the versions used during developme
 
 If either port is already occupied, stop the other process using it. The current frontend API address and backend CORS setting assume ports 5173 and 3000.
 
+## Optional sample catalog
+
+To add 20 fictional books to a fresh or existing development database, run this in `lmbs-api` after applying migrations and generating the Prisma client:
+
+```bash
+npx prisma db seed
+```
+
+The seed uses stable IDs, so running it again skips books already added by the seed and leaves all existing book records unchanged. It does not add patrons or loans. The frontend's Books Catalog will show the books after refreshing while **API Connected**. This command uses `DATABASE_URL` from `.env`; check that it names the database you intend to populate before running it. Prisma 7 runs the seed only when this command is invoked explicitly.
+
 ## Main API routes
 
 | Method      | Route                      | Purpose                              |
